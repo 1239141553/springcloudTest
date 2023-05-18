@@ -1,0 +1,72 @@
+spring:
+  application:
+    name: client-1
+
+server:
+  port: 8001
+  servlet:
+    contextPath: /exhibit
+logging:
+  level:
+    root: info
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8762/eureka/
+---
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/springboottest?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: 123
+  redis:
+    database: 10
+    host: 127.0.0.1
+    port: 6379
+    password: 123
+    timeout: 5000
+    ssl: false
+    jedis:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1ms
+        min-idle: 0
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    auto-mapping-behavior: full
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath*:mapper/**/*Mapper.xml
+  global-config:
+    # 逻辑删除配置
+    db-config:
+      # 删除前
+      logic-not-delete-value: 1
+      # 删除后
+      logic-delete-value: 0
+
+rocketmq:
+  name-server: 127.0.0.1:9876
+  producer:
+    group: mkt-contract-producer-group
+    maxMessageSize: 10485760
+    send-message-timeout: 10000
+  consumer:
+    group: mkt-contract-consumer-group
+    timeOut: 10000
+
+---
+spring:
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+    # 开启生产者发布确认，确认消息已发送到交换机 Exchange
+    publisher-confirm-type: correlated
+    # 开启发布者返回，确认消息已发送到队列 Queue
+    publisher-returns: true
