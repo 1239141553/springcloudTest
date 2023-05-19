@@ -34,6 +34,19 @@ spring:
         max-wait: -1ms
         min-idle: 0
 
+redisson:
+  # 单机
+  address: 127.0.0.1:6379
+  password: 123456
+  database: 10
+#  # 哨兵集群
+#  master-name: mymaster
+#  password: aaaaaa
+#  sentinel-addresses:
+#    - 10.47.91.83:26379
+#    - 10.47.91.83:26380
+#    - 10.47.91.83:26381
+
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
