@@ -1,6 +1,7 @@
 package com.huawei.controller;
 
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.json.JSONObject;
@@ -153,11 +154,13 @@ public class CreatTable {
         }
         //获取前5名的value
         Set<String> range = RedisUtils.range(rankingList, 0, 4, false);
-        range.forEach(v -> {
-            //根据rankingList+value获取score
-            Double score = RedisUtils.score(rankingList, v);
-            System.out.println(score);
-        });
+        if(CollUtil.isNotEmpty(range)){
+            range.forEach(v -> {
+                //根据rankingList+value获取score
+                Double score = RedisUtils.score(rankingList, v);
+                System.out.println(score);
+            });
+        }
         log.info("score:{}",range);
         return "666";
     }
