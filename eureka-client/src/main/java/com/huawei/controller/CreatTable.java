@@ -2,11 +2,15 @@ package com.huawei.controller;
 
 
 import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.RandomUtil;
+import cn.hutool.json.JSONObject;
 import com.huawei.Producer.CommonProducer;
 import com.huawei.common.GeneratorCodeConfigHttp;
 import com.huawei.utils.RedisUtils;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.LinkedHashMap;
+import java.util.Set;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
@@ -21,7 +27,10 @@ import java.util.concurrent.locks.ReentrantLock;
 
 @RestController
 @RequestMapping("/test")
+
 public class CreatTable {
+
+    private static Logger log = LoggerFactory.getLogger(CreatTable.class);
 
     @Autowired
     private GeneratorCodeConfigHttp generatorCodeConfigHttp;
@@ -32,6 +41,7 @@ public class CreatTable {
     private ArrayBlockingQueue arrayBlockingQueue;
     @Resource
     private RedissonClient redissonClient;
+
 
     private static Lock lock = new ReentrantLock();
 
@@ -127,5 +137,31 @@ public class CreatTable {
         }
         return "666";
     }
+
+    @GetMapping("/takeTop")
+    public String takeTop() {
+        //fastjson是由hashMap组成的,所以内容存放的顺序并不是有序的
+        JSONObject data = new JSONObject(new LinkedHashMap<>());
+        //积分排行榜
+        String rankingList = "ranking_list:integral";
+//        //战斗力排行榜
+//        String combat = "ranking_list:combat";
+        //随机生成10个4位数
+        for (int i = 0; i < 10; i++) {
+            String score = RandomUtil.randomNumbers(4);
+            RedisUtils.setZset(rankingList, "user-" + i, score);
+        }
+        //获取前5名的value
+        Set<String> range = RedisUtils.range(rankingList, 0, 4, false);
+        range.forEach(v -> {
+            //根据rankingList+value获取score
+            Double score = RedisUtils.score(rankingList, v);
+            System.out.println(score);
+        });
+        log.info("score:{}",range);
+        return "666";
+    }
+
+
 
 }

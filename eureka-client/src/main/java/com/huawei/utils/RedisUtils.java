@@ -1,5 +1,6 @@
 package com.huawei.utils;
 
+import cn.hutool.core.util.BooleanUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -334,6 +335,68 @@ public class RedisUtils {
             e.printStackTrace();
             logger.error("RedisUtils hset(String key,String item,Object value) failure." + e.getMessage());
             return false;
+        }
+    }
+
+    /**
+     * 插入排序集合
+     *
+     * @param key   键
+     * @param value  项
+     * @param value 值
+     * @return true 成功 false失败
+     */
+    public static boolean setZset(String key,Object value,String obj) {
+        try {
+            redisTemplate.opsForZSet().add(key, value, Double.parseDouble(obj));
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error("RedisUtils hset(String key,String item,Object value) failure." + e.getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * 获取有序集合
+     * @param key
+     * @param start
+     * @param end
+     * @param isDesc
+     * @param <T>
+     * @return
+     */
+    public static <T> Set<T> range(String key,int start,int end,boolean isDesc) {
+        Set<T> range =  new HashSet<>();
+        try {
+            if(BooleanUtil.isTrue(isDesc)){
+                range = redisTemplate.opsForZSet().range(key, start, end);
+            }else{
+                range = redisTemplate.opsForZSet().reverseRange(key, start, end);
+            }
+           return range;
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error("RedisUtils hset(String key,String item,Object value) failure." + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * 获取在Zset中的值
+     * @param key
+     * @param obj
+     * @return
+     */
+    public static Double score(String key,Object obj) {
+        Double score = null;
+        try {
+            score = redisTemplate.opsForZSet().score(key,obj);
+            return score;
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error("RedisUtils hset(String key,String item,Object value) failure." + e.getMessage());
+            return null;
         }
     }
 
