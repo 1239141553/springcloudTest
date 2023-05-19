@@ -24,7 +24,7 @@ spring:
 #              # 令牌桶算法token最大数量（每秒的最大请求数量）
 #              redis-rate-limiter.burstCapacity: 2
 #              key-resolver: "#{@apiKeyResolver}"
-        - id: client-1
+        - id: client-2
           uri: lb://client-2
           predicates:
           - Path=/foo2/**
