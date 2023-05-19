@@ -1,4 +1,4 @@
-package com.huawei.pojo;
+package huawei.pojo;
 
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import io.swagger.annotations.ApiModelProperty;

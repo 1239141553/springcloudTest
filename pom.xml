@@ -16,7 +16,7 @@
         <module>eureka-client2</module>
         <module>Sharding-jdbc</module>
         <module>es-demo</module>
-        <module>auth-resource</module>
+        <module>auth</module>
     </modules>
     <packaging>pom</packaging>
     <parent>

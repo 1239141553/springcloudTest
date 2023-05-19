@@ -1,4 +1,4 @@
-package com.huawei.mapper;
+package huawei.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.huawei.pojo.UserInfo;

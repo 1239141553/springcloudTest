@@ -1,4 +1,4 @@
-package com.huawei.controller;
+package huawei.controller;
 
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
@@ -8,7 +8,6 @@ import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.endpoint.TokenEndpoint;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
-import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.LinkedHashMap;

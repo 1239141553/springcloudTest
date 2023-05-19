@@ -1,38 +1,72 @@
 package com.huawei.requestHandler;
 
+
+import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
-import org.springframework.http.server.RequestPath;
+import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.http.server.reactive.ServerHttpResponse;
+import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-@Configuration
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+
+@Component
 @Slf4j
 public class IntercepterConfig implements GlobalFilter, Ordered {
+
+
+    private AntPathMatcher antPathMatcher = new AntPathMatcher();
+
+
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        //拦截方法，拦截到请求后，自动执行
-        log.info("filter 拦截方法，拦截到请求后，自动执行 ");
-        //以后开发中，不会将 user对象存到session，只会在地址上带上token
-        //根据token是否有空可以判断是否登录
-        //http://localhost:8001/users/3?token=10001&pageSize=30
-        RequestPath path = exchange.getRequest().getPath();
-        System.out.println(path);
-        if(path.toString().contains("no_session")){
-            return chain.filter(exchange);//2 全部放行
-        }else {
-            throw new RuntimeException("没有权限请登录");
+        ServerHttpRequest request = exchange.getRequest();
+        String path = request.getURI().getPath();
+        //谷粒学院api接口，校验用户必须登录
+        if(antPathMatcher.match("/exhibit/*", path)) {
+            List<String> tokenList = request.getHeaders().get("token");
+            if(null == tokenList) {
+                ServerHttpResponse response = exchange.getResponse();
+                return out(response);
+            } else {
+//                Boolean isCheck = JwtUtils.checkToken(tokenList.get(0));
+//                if(!isCheck) {
+                ServerHttpResponse response = exchange.getResponse();
+                return out(response);
+//                }
+            }
         }
-
+        //内部服务接口，不允许外部访问
+        if(antPathMatcher.match("/**/inner/**", path)) {
+            ServerHttpResponse response = exchange.getResponse();
+            return out(response);
+        }
+        return chain.filter(exchange);
     }
 
     @Override
     public int getOrder() {
-        //3:系统调用该方法获得过滤器的优先级
-        return 1; //数字越小，越优先
+        return 1;
+    }
+
+    private Mono<Void> out(ServerHttpResponse response) {
+        JSONObject message = new JSONObject();
+        message.put("success", false);
+        message.put("code", 28004);
+        message.put("data", "鉴权失败");
+        byte[] bits = message.toString().getBytes(StandardCharsets.UTF_8);
+        DataBuffer buffer = response.bufferFactory().wrap(bits);
+        //response.setStatusCode(HttpStatus.UNAUTHORIZED);
+        //指定编码，否则在浏览器中会中文乱码
+        response.getHeaders().add("Content-Type", "application/json;charset=UTF-8");
+        return response.writeWith(Mono.just(buffer));
     }
 }
 

@@ -1,4 +1,4 @@
-package com.huawei.service.impl;
+package huawei.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.huawei.mapper.UserInfoMapper;
@@ -7,6 +7,7 @@ import com.huawei.pojo.UserInfo;
 import com.huawei.service.UserInfoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> implements UserInfoService {
 
-    private final UserInfoMapper userInfoMapper;
+    @Autowired
+    private UserInfoMapper userInfoMapper;
 
     private final static Integer YES =1;
     /**

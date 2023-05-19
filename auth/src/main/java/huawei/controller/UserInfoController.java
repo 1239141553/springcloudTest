@@ -1,4 +1,4 @@
-package com.huawei.controller;
+package huawei.controller;
 
 import com.huawei.pojo.LoginUser;
 import com.huawei.pojo.Result;
