@@ -30,6 +30,9 @@ public class IntercepterConfig implements GlobalFilter, Ordered {
         ServerHttpRequest request = exchange.getRequest();
         String path = request.getURI().getPath();
         //谷粒学院api接口，校验用户必须登录
+        if(path.contains("no_session")){
+            return chain.filter(exchange);
+        }
         if(antPathMatcher.match("/exhibit/*", path)) {
             List<String> tokenList = request.getHeaders().get("token");
             if(null == tokenList) {
