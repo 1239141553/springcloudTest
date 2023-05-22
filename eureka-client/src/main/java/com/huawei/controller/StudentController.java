@@ -1,12 +1,14 @@
 package com.huawei.controller;
 
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.huawei.config.Generate.GenerateResult;
 import com.huawei.config.testField.Apple;
 import com.huawei.config.testField.FruitInfoUtil;
 import com.huawei.config.testField.TransferFieldMethod;
 import com.huawei.config.testField.Utils;
 import com.huawei.pojo.Student;
+import com.huawei.pojo.base.BaseQuery;
 import com.huawei.service.StudentService;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +43,7 @@ public class StudentController {
     public String test() {
         List<Student> student = new ArrayList<>();
         Student student1 = new Student();
-        student1.setName("111");
+        student1.setStudentName("111");
         student.add(student1);
         System.out.println(student);
         System.out.println("访问成功");
@@ -81,6 +83,15 @@ public class StudentController {
         //将消息携带绑定键值：testRouting 发送到交换机directExchange
         rabbitTemplate.convertAndSend("directExchange", "testRouting", map);
         return GenerateResult.ok("123");
+    }
+
+    @RequestMapping("/testPage")
+    public GenerateResult<Page<Student>> testPage() {
+        BaseQuery baseQuery = new BaseQuery();
+        baseQuery.setPageNum(1);
+        baseQuery.setPageSize(1);
+        Page<Student> studentPage = studentService.getStudentPage(baseQuery);
+        return GenerateResult.ok(studentPage,"访问成功");
     }
 }
 

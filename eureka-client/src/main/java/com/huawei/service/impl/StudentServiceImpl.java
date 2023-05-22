@@ -1,9 +1,11 @@
 package com.huawei.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.huawei.mapper.StudentMapper;
 import com.huawei.pojo.Student;
+import com.huawei.pojo.base.BaseQuery;
 import com.huawei.service.StudentService;
 import com.huawei.utils.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,14 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         QueryWrapper<Student> queryWrapper = new QueryWrapper<>();
         List<Student> students = studentMapper.selectList(queryWrapper);
         return students;
+    }
+
+    @Override
+    public Page<Student> getStudentPage(BaseQuery baseQuery) {
+        Page<Student> studentPage = new Page<>(baseQuery.getPageNum(),baseQuery.getPageSize());
+        QueryWrapper<Student> queryWrapper = new QueryWrapper<>();
+        studentMapper.selectPage(studentPage,queryWrapper);
+        return studentPage;
     }
 
     @Override

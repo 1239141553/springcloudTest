@@ -1,6 +1,5 @@
 package com.huawei.pojo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.huawei.config.testField.TransferField;
@@ -27,14 +26,14 @@ public class Student implements Serializable {
     /**
      * 主键
      */
-    @TableId(value = "id", type = IdType.AUTO)
+    @TableId(value = "id")
     private Integer id;
 
     /**
      * 名字
      */
     @TransferField(target = "123")
-    private String name;
+    private String studentName;
 
     /**
      * 年龄
@@ -44,7 +43,7 @@ public class Student implements Serializable {
     /**
      * 性别
      */
-    private Boolean sex;
+    private Integer sex;
 
 
 }

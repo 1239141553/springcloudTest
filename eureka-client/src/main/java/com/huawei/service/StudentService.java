@@ -1,7 +1,9 @@
 package com.huawei.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.huawei.pojo.Student;
+import com.huawei.pojo.base.BaseQuery;
 
 import java.util.List;
 
@@ -19,6 +21,8 @@ public interface StudentService extends IService<Student> {
      * @return
      */
     List<Student> getStudentList();
+
+    Page<Student> getStudentPage(BaseQuery baseQuery);
 
     List<Student> getLogStudentList();
 
