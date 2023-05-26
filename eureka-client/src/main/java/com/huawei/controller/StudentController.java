@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.sql.DataSource;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -37,6 +38,8 @@ public class StudentController {
     private StudentService studentService;
     @Autowired
     private RabbitTemplate rabbitTemplate;
+    @Autowired
+    private DataSource dataSource;
 
     @RequestMapping("/no_session/test")
 //    @TestMethod(projectName = "1122")
@@ -92,6 +95,12 @@ public class StudentController {
         baseQuery.setPageSize(1);
         Page<Student> studentPage = studentService.getStudentPage(baseQuery);
         return GenerateResult.ok(studentPage,"访问成功");
+    }
+
+    @RequestMapping("/testDataSource")
+    public GenerateResult testDataSource() {
+        System.out.println(dataSource.getClass());
+        return GenerateResult.ok();
     }
 }
 
