@@ -1,14 +1,15 @@
-package huawei.pojo;
+package com.huawei.pojo;
 
+import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.codehaus.jackson.map.ext.JodaDeserializers;
+import org.codehaus.jackson.map.ext.JodaSerializers;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -34,15 +35,15 @@ public class BaseEntity implements Serializable {
     public Integer deleted;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = JodaDeserializers.LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = JodaSerializers.LocalDateTimeSerializer.class)
     @TableField(fill = FieldFill.INSERT)
     @ApiModelProperty(name = "createTime", value = "创建时间")
     public LocalDateTime createTime;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = JodaDeserializers.LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = JodaSerializers.LocalDateTimeSerializer.class)
     @TableField(fill = FieldFill.INSERT_UPDATE)
     @ApiModelProperty(name = "updateTime", value = "修改时间")
     public LocalDateTime updateTime;

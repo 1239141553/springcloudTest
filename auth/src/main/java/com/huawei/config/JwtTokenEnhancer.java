@@ -1,4 +1,4 @@
-package huawei.config;
+package com.huawei.config;
 
 import com.alibaba.fastjson.JSON;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;

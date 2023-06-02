@@ -1,4 +1,4 @@
-package huawei.pojo;
+package com.huawei.pojo;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;

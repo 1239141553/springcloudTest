@@ -1,4 +1,4 @@
-package huawei.service;
+package com.huawei.service;
 
 /**
  * 内容

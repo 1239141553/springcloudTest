@@ -1,4 +1,4 @@
-package huawei.requestHandler;//package com.huawei.requestHandler;
+package com.huawei.requestHandler;//package com.huawei.requestHandler;
 //
 //import org.springframework.stereotype.Component;
 //import org.springframework.web.servlet.HandlerInterceptor;

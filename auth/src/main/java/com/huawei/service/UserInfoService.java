@@ -1,8 +1,8 @@
-package huawei.service;
+package com.huawei.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.huawei.pojo.Result;
 import com.huawei.pojo.UserInfo;
+import com.huawei.pojo.Result;
 
 
 /**

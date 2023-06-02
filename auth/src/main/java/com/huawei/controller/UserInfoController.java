@@ -1,8 +1,9 @@
-package huawei.controller;
+package com.huawei.controller;
+
 
 import com.huawei.pojo.LoginUser;
-import com.huawei.pojo.Result;
 import com.huawei.pojo.UserInfo;
+import com.huawei.pojo.Result;
 import com.huawei.service.UserInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

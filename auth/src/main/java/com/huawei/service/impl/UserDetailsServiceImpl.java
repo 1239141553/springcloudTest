@@ -1,4 +1,4 @@
-package huawei.service.impl;
+package com.huawei.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.huawei.pojo.LoginUser;

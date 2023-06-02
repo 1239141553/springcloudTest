@@ -1,4 +1,4 @@
-package huawei.pojo;
+package com.huawei.pojo;
 
 
 /**

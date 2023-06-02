@@ -1,4 +1,5 @@
-package huawei.config;
+package com.huawei.config;
+
 
 import com.huawei.pojo.LoginUser;
 import com.huawei.service.impl.UserDetailsServiceImpl;
