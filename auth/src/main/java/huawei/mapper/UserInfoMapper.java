@@ -5,7 +5,7 @@ import com.huawei.pojo.UserInfo;
 import org.apache.ibatis.annotations.Param;
 
 /**
- * @author hjf
+ * @author lkx
  * @date 2022-10-19 10:26
  * @describe 用户mapper
  */

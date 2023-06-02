@@ -12,7 +12,7 @@ import org.springframework.security.oauth2.provider.token.store.redis.RedisToken
 import javax.annotation.Resource;
 
 /**
- * @author hjf
+ * @author lkx
  * @date 2022-10-24 18:09
  * @describe 资源配置类
  */

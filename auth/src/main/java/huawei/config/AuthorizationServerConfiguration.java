@@ -21,7 +21,7 @@ import javax.sql.DataSource;
 import java.util.LinkedHashMap;
 
 /**
- * @author hjf
+ * @author lkx
  * @date 2022-10-24 14:10
  * @describe 授权配置类
  */
