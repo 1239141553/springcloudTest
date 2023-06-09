@@ -1,5 +1,6 @@
 package com.huawei.pojo;
 
+import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @Document(indexName = "discusspost")//设置索引名称
 @Setting
+@Data
 public class DiscussPost {
     @Id
     private Integer id;
@@ -31,8 +33,10 @@ public class DiscussPost {
     private Integer commentCount=0;
     @Field(type = FieldType.Double)
     private double score;
-    @Field(type = FieldType.Object)
+    @Field(type = FieldType.Nested)
     private List<User> userList;
+    @Field(type = FieldType.Keyword)
+    private String name;
 
 
     public Integer getId() {
